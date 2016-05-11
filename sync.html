@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>Henkel - Persil</title>
+
+</head>
+
+<body>
+<div id="wrapper">
+
+	<h1>Sync with Server</h1>
+
+	<div id="middle">
+	
+	<!--
+		 <form method="post" action="http://android.fullweb.eu/henkel/form.php">
+			<input type="hidden" name="nume" id="nume" value="anton" />
+			<input type="submit" name="submit" value="submit">
+		</form>
+	-->
+	<div id="theform">
+	
+	
+	</div>
+	
+	<script type="text/javascript">
+		function thesync(){
+			
+			var i;
+			var final = 1;
+			var formcode = '<form id="tosubmit" name="sync" method="post" action="http://android.fullweb.eu/henkel/form.php" target="hiddenFrame">';
+			for (i = 1; i < localStorage.length; i++)
+			{
+				var getNume = "nume" + i;
+				var getPrenume = "prenume" + i;
+				var getEmail = "email" + i;
+				var getTelefon = "telefon" + i;
+				var showNume = window.localStorage.getItem(getNume);
+				if (showNume == null) { break;}
+				var showPrenume = window.localStorage.getItem(getPrenume);
+				var showEmail = window.localStorage.getItem(getEmail);
+				var showTelefon = window.localStorage.getItem(getTelefon);
+				formcode += '<input type="text" name="nume['+i+']" value="'+showNume+'"><input type="text" name="prenume['+i+']" value="'+showPrenume+'"><input type="text" name="email['+i+']" value="'+showEmail+'"><input type="text" name="telefon['+i+']" value="'+showTelefon+'"><br>';
+				document.getElementById("theform").innerHTML = formcode;
+				final += 1;
+			}
+			formcode += 'asd</form>';
+		}
+		function sendform(){
+		
+			document.getElementById("tosubmit").submit();
+			
+		}
+	</script>
+	<button onClick="thesync()">Get data</button>
+	<button onClick="sendform()">Upload Form</button>
+	
+	<div id="embeder">
+	
+	<iframe name="hiddenFrame" class="hide" frameBorder="0" width="400" height="200"></iframe>
+	
+	</div>
+
+	</div>
+	<div id="menu">
+		
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="quantities.html">Settings</a></li>
+			<li><a href="sync.html">Sync</a></li>
+		
+		</ul>
+		<div style="clear: both;"></div>
+	</div>
+</div>
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+	<!-- set width and height -->
+<script type="text/javascript">
+	var width = window.innerWidth;
+	var height = window.innerHeight;
+	document.getElementById("wrapper").style.width = width + "px";
+	document.getElementById("wrapper").style.height = height + "px";
+</script>
+</body>
+</html>
